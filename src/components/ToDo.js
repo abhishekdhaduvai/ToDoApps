@@ -80,7 +80,6 @@ class ToDo extends React.Component {
     }
 
     mouseEntered = (taskId) => {
-        console.log("Hovering on ", taskId)
         const { tasks } = this.state;
         this.setState(state => {
             return {
@@ -133,81 +132,79 @@ class ToDo extends React.Component {
         return (
             <div>
                 <div style={styles.heading}>todos</div>
-                <input 
-                    type='text'
-                    className={this.getInputClass()}
-                    placeholder='What needs to be done?'
-                    value={input}
-                    onChange={e => this.updateInput(e.target.value)} 
-                    onKeyPress={e => this.keyPressed(e.key)}/>
+                <div className="container">
+                    <input 
+                        type='text'
+                        className={this.getInputClass()}
+                        placeholder='What needs to be done?'
+                        value={input}
+                        onChange={e => this.updateInput(e.target.value)} 
+                        onKeyPress={e => this.keyPressed(e.key)}/>
 
-                {/* Tasks */}
-                {tasks.length > 0 &&
-                    <div>
-                        {items.map(task => (
-                            <div 
-                                key={task.id} 
-                                className='tasks'
-                                onMouseEnter={e => this.mouseEntered(task.id)}
-                                onMouseLeave={e => this.mouseExited(task.id)}>
-                                
-                                <label className="checkbox-container">
+                    {/* Tasks */}
+                    {tasks.length > 0 &&
+                        <div>
+                            {items.map(task => (
+                                <div 
+                                    key={task.id} 
+                                    className='tasks'
+                                    onMouseEnter={e => this.mouseEntered(task.id)}
+                                    onMouseLeave={e => this.mouseExited(task.id)}>
                                     <input 
                                         checked={task.status === 'completed'}
                                         className='toggle'
                                         type='checkbox' 
                                         onChange={e => this.toggleTask(task.id)} />
-                                    <span className="checkmark"></span>
-                                </label>
-                                {this.state.edit === task.id ? 
-                                    <input 
-                                        type='text'
-                                        value={task.task}
-                                        onChange={e => this.updateInput(e.target.value)} 
-                                        onKeyPress={e => this.keyPressed(e.key)}/>
-                                    :
-                                    <span className={task.status}>{task.task}</span>
-                                }
-                                {task.hover && 
-                                    <button 
-                                        className='delete' 
-                                        onClick={e => this.deleteTask(task.id)}/>
-                                }
-                            </div>
-                        ))}
+                                    {this.state.edit === task.id ? 
+                                        <input 
+                                            type='text'
+                                            value={task.task}
+                                            onChange={e => this.updateInput(e.target.value)} 
+                                            onKeyPress={e => this.keyPressed(e.key)}/>
+                                        :
+                                        <span className={task.status}>{task.task}</span>
+                                    }
+                                    {task.hover && 
+                                        <button 
+                                            className='delete' 
+                                            onClick={e => this.deleteTask(task.id)}/>
+                                    }
+                                </div>
+                            ))}
 
-                        {/* Filters */}
-                        <div style={styles.labels}>
-                            <div style={{paddingLeft: '2em', cursor: 'default'}}>
-                                {tasks.length === 1 ?
-                                    <div>{tasks.length} item left</div>
-                                    :
-                                    <div>{tasks.length} items left</div>
-                                }
-                            </div>
-                            <div style={styles.taskTypes}>
-                                <div 
-                                    id='All'
-                                    className={this.allFilter()}
-                                    onClick={e => this.filterSelected(e.target.id)}>
-                                    All
+                            {/* Filters */}
+                            <div style={styles.labels}>
+                                <div style={{paddingLeft: '2em', cursor: 'default'}}>
+                                    {tasks.length === 1 ?
+                                        <div>{tasks.length} item left</div>
+                                        :
+                                        <div>{tasks.length} items left</div>
+                                    }
                                 </div>
-                                <div 
-                                    id='Active'
-                                    className={this.activeFilter()}
-                                    onClick={e => this.filterSelected(e.target.id)}>
-                                    Active
-                                </div>
-                                <div 
-                                    id='Completed'
-                                    className={this.completedFilter()}
-                                    onClick={e => this.filterSelected(e.target.id)}>
-                                    Completed
+                                <div style={styles.taskTypes}>
+                                    <div 
+                                        id='All'
+                                        className={this.allFilter()}
+                                        onClick={e => this.filterSelected(e.target.id)}>
+                                        All
+                                    </div>
+                                    <div 
+                                        id='Active'
+                                        className={this.activeFilter()}
+                                        onClick={e => this.filterSelected(e.target.id)}>
+                                        Active
+                                    </div>
+                                    <div 
+                                        id='Completed'
+                                        className={this.completedFilter()}
+                                        onClick={e => this.filterSelected(e.target.id)}>
+                                        Completed
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                }
+                    }
+                </div>
             </div>
         )
     }
@@ -229,7 +226,6 @@ const styles = {
         background: 'white',
         padding: '16px 60px 16px 16px',
         textAlign: 'left',
-        width: '50%',
         fontWeight: '100',
         fontFamily: 'Dosis',
         color: '#757575',
@@ -239,7 +235,7 @@ const styles = {
         display: 'flex',
         flex: 2,
         justifyContent: 'space-around',
-        paddingLeft: '5em',
+        paddingLeft: '10em',
     }
 }
 

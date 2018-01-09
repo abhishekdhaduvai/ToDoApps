@@ -5,7 +5,7 @@ body{
 .App {
   text-align: center;
   height: -webkit-fill-available;
-  margin: 2.5% 20%;
+  /* margin: 2.5% 20%; */
 }
 
 .App-logo {
@@ -18,13 +18,21 @@ body{
   to { transform: rotate(360deg); }
 }
 
+.container {
+  max-width: 550px;
+  min-width: 230px;
+  margin: 0 auto; 
+  display: flex;
+  flex-direction: column;
+}
+
 .shadow {
   padding: 16px 16px 16px 60px;
+  flex: 1;
   border: none;
   box-shadow: 7px 1px 38px -9px rgba(0,0,0,0.75);
   font-size: 24px;
   line-height: 1.4em;
-  width: 50%;
   font-weight: 200;
   font-family: 'Dosis';
   color: #757575;
@@ -32,13 +40,14 @@ body{
 
 .no-shadow {
   padding: 16px 16px 16px 60px;
+  flex: 1;
   border: none;
   font-size: 24px;
   line-height: 1.4em;
-  width: 50%;
   font-weight: 200;
   font-family: 'Dosis';
   color: #757575;
+  box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.2);
 }
 
 input:focus {
@@ -69,6 +78,7 @@ input:focus {
   font-size: 1em;
   float: right;
   cursor: default;
+  margin-right: 1em;
 }
 
 .delete:after {
@@ -77,16 +87,34 @@ input:focus {
 
 .tasks {
   border-top: 1px solid #e6e6e6;
+  flex: 1;
+  display: flex;
   margin: auto;
   background: white;
-  padding: 16px 16px 16px 60px;
   font-size: 24px;
   line-height: 1.4em;
   text-align: left;
-  width: 50%;
   font-weight: 200;
   font-family: 'Dosis';
   color: #757575;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.2);
+}
+
+.tasks span {
+  align-self: center;
+  flex: 2;
+  padding-left: 10px;
+}
+
+.sources {
+  font-family: 'Raleway';
+  font-size: 15px;
+  color: #757575;
+  margin: 3em;
+}
+
+.sources a {
+  text-decoration: none;
 }
 
 .completed {
@@ -97,14 +125,15 @@ input:focus {
   text-decoration: none;
 }
 
-.toggle{
-  border-radius: 1em;
-  height: 25px;
-  width: 25px;
-  background-color: #eee;
+.toggle {
+  appearance: none;
+  margin-left: 1em;
 }
 
-.toggle:checked{
-  border-radius: 1em;
-  background-color: #2196F3;
+.toggle:after{
+  content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#bddad5" stroke-width="3"/></svg>')
+}
+
+.toggle:checked:after {
+  content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="#bddad5" stroke-width="3"/><path fill="#5dc2af" d="M72 25L42 71 27 56l-4 4 20 20 34-52z"/></svg>')
 }
