@@ -58,7 +58,6 @@ class ToDo extends React.Component {
     }
 
     keyPressed = (key, taskId) => {
-        console.log("key pressed ", key)
         if(taskId === undefined){
             if(key === 'Enter' && this.state.input.trim().length > 0){
                 const task = this.state.input;
@@ -248,7 +247,7 @@ class ToDo extends React.Component {
 
                             {/* Filters */}
                             <div style={styles.labels}>
-                                <div style={{paddingLeft: '2em', cursor: 'default'}}>
+                                <div className="tasks-count">
                                     {tasks.length === 1 ?
                                         <div>{tasks.length} item left</div>
                                         :
@@ -309,7 +308,6 @@ const styles = {
         display: 'flex',
         flex: 2,
         justifyContent: 'space-around',
-        paddingLeft: '10em',
     }
 }
 
