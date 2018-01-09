@@ -82,7 +82,7 @@ input:focus {
 }
 
 .delete:after {
-  content: 'x';
+  content: 'X';
 }
 
 .tasks {
