@@ -6,7 +6,7 @@ class ToDo extends React.Component {
         input: "",
         tasks: [],
         filter: "All",
-        edit: ""
+        editTask: "",
     }
 
     getInputClass = () => {
@@ -57,25 +57,59 @@ class ToDo extends React.Component {
         });
     }
 
-    keyPressed = (key) => {
-        if(key === 'Enter' && this.state.input.trim().length > 0){
-            const task = this.state.input;
-            let d = Date.now();
-            let temp = {
-                id: d.toString(),
-                task: task,
-                hover: false,
-                status: 'active'
-            }
-            let tempTasks = this.state.tasks;
-            tempTasks.push(temp);
-            this.setState(state => {
-                return {
-                    ...state,
-                    input: "",
-                    tasks: tempTasks
+    keyPressed = (key, taskId) => {
+        console.log("key pressed ", key)
+        if(taskId === undefined){
+            if(key === 'Enter' && this.state.input.trim().length > 0){
+                const task = this.state.input;
+                let d = Date.now();
+                let temp = {
+                    id: d.toString(),
+                    task: task,
+                    hover: false,
+                    status: 'active',
+                    edit: false,
                 }
-            });
+                let tempTasks = this.state.tasks;
+                tempTasks.push(temp);
+                this.setState(state => {
+                    return {
+                        ...state,
+                        input: "",
+                        tasks: tempTasks
+                    }
+                });
+            }
+        }
+        else {
+            const { tasks } = this.state;
+            if(key === 'Escape'){
+                this.setState(state => {
+                    return {
+                        ...state,
+                        tasks: tasks.map(task => {
+                            return task.id === taskId ? {
+                                ...task,
+                                edit: false
+                            } : task
+                        })
+                    }
+                });
+            }
+            else if(key === 'Enter' && this.state.editTask.trim().length > 0){
+                this.setState(state => {
+                    return {
+                        ...state,
+                        tasks: tasks.map(task => {
+                            return task.id === taskId ? {
+                                ...task,
+                                task: this.state.editTask,
+                                edit: false
+                            } : task
+                        })
+                    }
+                });
+            }
         }
     }
 
@@ -117,8 +151,40 @@ class ToDo extends React.Component {
         this.setState({tasks: temp})
     }
 
+    editTask = (taskId, task) => {
+        const { tasks } = this.state;
+        this.setState(state => {
+            return {
+                ...state,
+                editTask: task,
+                tasks: tasks.map(task => {
+                    return task.id === taskId ? {
+                        ...task,
+                        edit: true,
+                    } : task
+                })
+            }
+        });
+    }
+
+    updateEdit = (taskId, val) => {
+        const { tasks } = this.state;
+        this.setState(state => {
+            return {
+                ...state,
+                tasks: tasks.map(task => {
+                    return task.id === taskId ? {
+                        ...task,
+                        edit: true
+                    } : task
+                })
+            }
+        });
+        this.setState({editTask: val})
+    }
+
     render(){
-        const { input, tasks, filter } = this.state;
+        const { input, tasks, filter, editTask } = this.state;
         let items = [];
         if(filter === 'Completed'){
             items = tasks.filter(task => task.status === 'completed');
@@ -139,7 +205,7 @@ class ToDo extends React.Component {
                         placeholder='What needs to be done?'
                         value={input}
                         onChange={e => this.updateInput(e.target.value)} 
-                        onKeyPress={e => this.keyPressed(e.key)}/>
+                        onKeyDown={e => this.keyPressed(e.key)}/>
 
                     {/* Tasks */}
                     {tasks.length > 0 &&
@@ -155,15 +221,23 @@ class ToDo extends React.Component {
                                         className='toggle'
                                         type='checkbox' 
                                         onChange={e => this.toggleTask(task.id)} />
-                                    {this.state.edit === task.id ? 
+
+                                    {task.edit ? 
                                         <input 
                                             type='text'
-                                            value={task.task}
-                                            onChange={e => this.updateInput(e.target.value)} 
-                                            onKeyPress={e => this.keyPressed(e.key)}/>
+                                            value={editTask}
+                                            className='editTask'
+                                            onChange={e => this.updateEdit(task.id, e.target.value)} 
+                                            onKeyDown={e => this.keyPressed(e.key, task.id)}
+                                            onBlur={e => this.keyPressed('Enter', task.id)}/>
                                         :
-                                        <span className={task.status}>{task.task}</span>
+                                        <span 
+                                            className={task.status}
+                                            onDoubleClick={e => this.editTask(task.id, task.task)}>
+                                            {task.task}
+                                        </span>
                                     }
+
                                     {task.hover && 
                                         <button 
                                             className='delete' 

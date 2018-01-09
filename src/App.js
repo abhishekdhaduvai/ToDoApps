@@ -9,6 +9,7 @@ class App extends Component {
       <div className="App">
         <ToDo />
         <div className="sources">
+          Double Click to edit a Task <br /><br />
           Source - <a href="https://github.com/abhishekdhaduvai/ToDoApps/tree/react">GitHub</a>
         </div>
         {/* <img src={logo} className="App-logo" alt="logo" /> */}

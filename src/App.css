@@ -50,6 +50,19 @@ body{
   box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.2);
 }
 
+.editTask {
+  flex: 1;
+  border: none;
+  font-size: 24px;
+  line-height: 1.4em;
+  font-weight: 200;
+  font-family: 'Dosis';
+  color: #757575;
+  box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.2);
+  margin: 5px;
+  padding: 5px;
+}
+
 input:focus {
   outline: none
 }
@@ -108,7 +121,7 @@ input:focus {
 
 .sources {
   font-family: 'Raleway';
-  font-size: 15px;
+  font-size: 12px;
   color: #757575;
   margin: 3em;
 }
